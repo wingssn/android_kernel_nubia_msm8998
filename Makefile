@@ -639,7 +639,7 @@ endif
 ifeq ($(KBUILD_EXTMOD),)
 # Objects we will link into vmlinux / subdirs we need to visit
 init-y		:= init/
-drivers-y	:= drivers/ sound/
+drivers-y	:= drivers/ sound/ techpack/
 drivers-$(CONFIG_SAMPLES) += samples/
 net-y		:= net/
 libs-y		:= lib/
@@ -1303,6 +1303,7 @@ headers: $(version_h) scripts_unifdef uapi-asm-generic archheaders archscripts
 	  $(error Headers not exportable for the $(SRCARCH) architecture))
 	$(Q)$(MAKE) $(hdr-inst)=include/uapi
 	$(Q)$(MAKE) $(hdr-inst)=arch/$(SRCARCH)/include/uapi
+	$(Q)$(MAKE) $(hdr-inst)=techpack
 
 # Deprecated. It is no-op now.
 PHONY += headers_check

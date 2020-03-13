@@ -68,3 +68,4 @@ obj-$(CONFIG_FB_MSM_MDSS_WRITEBACK) += mdss_wb.o
 
 obj-$(CONFIG_FB_MSM_MDSS) += mdss_fb.o mdss_util.o
 obj-$(CONFIG_COMPAT) += mdss_compat_utils.o
+obj-$(CONFIG_NUBIA_LCD_DISP_PREFERENCE) += nubia_disp_preference.o

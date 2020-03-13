@@ -20,6 +20,7 @@ struct panel_id {
 #define DEFAULT_ROTATOR_FRAME_RATE 120
 #define ROTATOR_LOW_FRAME_RATE 30
 
+#define CONFIG_NUBIA_LCD_BACKLIGHT_CURVE 1
 #define MDSS_DSI_MAX_ESC_CLK_RATE_HZ	19200000
 
 #define MDSS_DSI_RST_SEQ_LEN	10
@@ -849,6 +850,12 @@ struct mdss_panel_info {
 	int panel_power_state;
 	int compression_mode;
 
+#ifdef CONFIG_NUBIA_LCD_DISP_PREFERENCE
+	int panel_ready_for_cmd;
+#endif
+#ifdef CONFIG_NUBIA_LCD_BACKLIGHT_CURVE
+	uint32_t backlight_curve[256];
+#endif
 	uint32_t panel_dead;
 	u32 panel_force_dead;
 	u32 panel_orientation;

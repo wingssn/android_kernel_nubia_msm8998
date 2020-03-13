@@ -1,0 +1,108 @@
+&snd_9335{
+	qcom,audio-routing =
+		"AIF4 VI", "MCLK",
+		"RX_BIAS", "MCLK",
+		"MADINPUT", "MCLK",
+		"hifi amp", "LINEOUT1",
+		"hifi amp", "LINEOUT2",
+		"AMIC2", "MIC BIAS2",
+		"MIC BIAS2", "Headset Mic",
+		"AMIC3", "MIC BIAS2",
+		"MIC BIAS2", "ANCRight Headset Mic",
+		"AMIC4", "MIC BIAS2",
+		"MIC BIAS2", "ANCLeft Headset Mic",
+		"AMIC5", "MIC BIAS1",
+		"MIC BIAS1", "Secondary Mic",
+		"AMIC6", "MIC BIAS3",
+		"MIC BIAS3", "Handset Mic",
+		"DMIC0", "MIC BIAS1",
+		"MIC BIAS1", "Digital Mic0",
+		"DMIC1", "MIC BIAS1",
+		"MIC BIAS1", "Digital Mic1",
+		"DMIC2", "MIC BIAS3",
+		"MIC BIAS3", "Digital Mic2",
+		"DMIC3", "MIC BIAS3",
+		"MIC BIAS3", "Digital Mic3",
+		"DMIC4", "MIC BIAS4",
+		"MIC BIAS4", "Digital Mic4",
+		"DMIC5", "MIC BIAS4",
+		"MIC BIAS4", "Digital Mic5",
+		"SpkrLeft IN", "SPK1 OUT",
+		"SpkrRight IN", "SPK2 OUT";
+
+	qcom,msm-mbhc-hphl-swh = <1>;
+	
+	/delete-property/ qcom,hph-en0-gpio;
+	/delete-property/ qcom,hph-en1-gpio;
+	qcom,swap-en0-gpios = <&tlmm 75 0>;
+	qcom,swap-en1-gpios = <&tlmm 80 0>;
+	
+	qcom,wsa-max-devs = <0>;
+	
+	/delete-node/ msm_cdc_pinctrl@67;
+	/delete-node/ msm_cdc_pinctrl@68;
+
+};
+
+&snd_9335{
+	qcom,mbhc-audio-jack-type = "4-pole-jack";
+};
+
+&soc {
+	/delete-node/ sound-tavil;
+	
+	qcom,wcd-dsp-mgr {
+		qcom,wdsp-components = <&wcd934x_cdc 0>,
+						<&glink_spi_xprt_wdsp 2>;
+	};
+	
+	/delete-node/ msm_cdc_pinctrl@59;
+	/delete-node/ msm_cdc_pinctrl@60;
+	/delete-node/ msm_cdc_pinctrl@64;
+	
+	wcd_rst_gpio: msm_cdc_pinctrl@63 {
+		compatible = "qcom,msm-cdc-pinctrl";
+		qcom,cdc-rst-n-gpio = <&tlmm 63 0>;
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&cdc_reset_active>;
+		pinctrl-1 = <&cdc_reset_sleep>;
+	};
+};
+
+&slim_aud {
+	tasha_codec {
+		qcom,cdc-micbias1-mv = <2500>;
+		qcom,cdc-micbias2-mv = <2700>;
+		qcom,cdc-micbias3-mv = <2500>;
+		qcom,cdc-micbias4-mv = <2500>;
+		qcom,cdc-dmic-clk-drv-strength = <2>;
+	};
+};
+
+&wcd934x_cdc {
+	qcom,cdc-micbias2-mv = <2700>;
+	/delete-node/ wcd_spi;
+};
+
+//kangting modify for optimize the powerup error log ----start
+&wsa_spkr_sd1 {
+	/delete-property/ pinctrl-names;
+	/delete-property/ pinctrl-0;
+	/delete-property/ pinctrl-1;
+};
+
+&wsa_spkr_sd2 {
+	/delete-property/ pinctrl-names;
+	/delete-property/ pinctrl-0;
+	/delete-property/ pinctrl-1;
+};
+	
+//kangting modify for optimize the powerup error log ----end
+
+&dai_mi2s0 {
+	qcom,msm-mi2s-rx-lines = <1>;
+	qcom,msm-mi2s-tx-lines = <2>;
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&pri_mi2s_sck_active &pri_mi2s_ws_active &pri_mi2s_sd0_active  &pri_mi2s_sd1_active>;
+	pinctrl-1 = <&pri_mi2s_sck_sleep &pri_mi2s_ws_sleep &pri_mi2s_sd0_sleep &pri_mi2s_sd1_sleep>;
+};

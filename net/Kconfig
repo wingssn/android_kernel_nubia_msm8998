@@ -423,3 +423,6 @@ config HAVE_BPF_JIT
 
 config HAVE_EBPF_JIT
 	bool
+
+#nubia add for Lte+wifi
+source "net/multichannel/Kconfig"

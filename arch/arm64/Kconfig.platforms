@@ -182,4 +182,8 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+config NUBIA_NX595J
+    depends on ARCH_MSM8998
+    bool "Adds support for Nubia NX595J"
+
 endmenu

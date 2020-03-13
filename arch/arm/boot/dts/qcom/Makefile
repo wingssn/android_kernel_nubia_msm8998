@@ -296,6 +296,9 @@ dtb-$(CONFIG_ARCH_SDM630) += sdm630-rumi.dtb \
 	sdm455-rcm.dtb \
 	sdm455-internal-codec-rcm.dtb
 
+dtb-$(CONFIG_NUBIA_NX595J) = msm8998-v2.1-mtp-NX595J.dtb \
+	msm8998-v2-mtp-NX595J.dtb \
+	msm8998-mtp-NX595J.dtb
 ifeq ($(CONFIG_ARM64),y)
 always          := $(dtb-y)
 always          += $(dtbo-y)

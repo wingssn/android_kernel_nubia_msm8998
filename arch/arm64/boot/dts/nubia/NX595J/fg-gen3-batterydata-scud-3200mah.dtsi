@@ -15,7 +15,7 @@ qcom,scud_3200mah {
 	qcom,fg-cc-cv-threshold-mv = <4385>;
 	qcom,nom-batt-capacity-mah = <3200>;
 	qcom,fastchg-current-ma = <2150>;
-	qcom,batt-id-kohm = <180>;
+	qcom,batt-id-kohm = <15>;
 	qcom,battery-beta = <3800>;
 	qcom,battery-type = "scud_3200mah";
 	qcom,checksum = <0xA81E>;

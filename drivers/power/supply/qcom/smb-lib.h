@@ -321,6 +321,27 @@ struct smb_charger {
 	int			thermal_levels;
 	int			*thermal_mitigation;
 	int			dcp_icl_ua;
+
+#if defined(CONFIG_TYPEC_AUDIO_ADAPTER_SWITCH)
+	int			usb_audio_select_supported;
+	int			switch_en;
+	int			switch_select;
+	int			mbhc_int;
+#endif
+
+#if defined(CONFIG_NUBIA_CHARGE_FEATURE)
+	bool 		bat_temp_limit_support;
+	int 		bat_temp_limit_mask;
+	int 		bat_temp_limit_current;
+	int 		bat_temp_jeita_current;
+	int			bat_temp_limit_threshold;
+	int 		bat_temp_limit_voltage;
+	struct delayed_work	 	typec_disable_cmd_work;
+	struct delayed_work	 	thermal_monitor_work;
+	struct delayed_work		jeita_fcv_monitor_work;
+	struct notifier_block 	fb_notifier;
+#endif
+
 	int			fake_capacity;
 	bool			step_chg_enabled;
 	bool			sw_jeita_enabled;

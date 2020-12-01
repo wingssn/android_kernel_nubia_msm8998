@@ -331,6 +331,46 @@ static int smb2_parse_dt(struct smb2 *chip)
 	return 0;
 }
 
+#if defined(CONFIG_TYPEC_AUDIO_ADAPTER_SWITCH)
+#include <linux/of_gpio.h>
+static int smb2_pre_parse_dt(struct smb2 *chip)
+{
+	struct smb_charger *chg = &chip->chg;
+	struct device_node *node = chg->dev->of_node;
+
+	if (!node) {
+		pr_err("device tree node missing\n");
+		return -EINVAL;
+	}
+
+	chg->usb_audio_select_supported = of_property_read_bool(node,
+					"qcom,usb-audio-select-support");
+
+	chg->switch_en = of_get_named_gpio(node, "qcom,switch-en-gpio", 0);
+
+	chg->switch_select = of_get_named_gpio(node, "qcom,switch-select-gpio", 0);
+
+	chg->mbhc_int = of_get_named_gpio(node, "qcom,mbhc-int-gpio", 0);
+
+	chg->bat_temp_limit_support = of_property_read_bool(node,
+					"qcom,bat-temp-limit-support");
+
+	of_property_read_u32(node, "qcom,bat-temp-limit-current",
+				&chg->bat_temp_limit_current);
+
+	of_property_read_u32(node, "qcom,bat-temp-jeita-current",
+				&chg->bat_temp_jeita_current);
+
+	of_property_read_u32(node, "qcom,bat-temp-limit-threshold",
+				&chg->bat_temp_limit_threshold);
+
+	of_property_read_u32(node, "qcom,bat-temp-limit-voltage",
+				&chg->bat_temp_limit_voltage);
+
+	return 0;
+}
+#endif
+
 /************************
  * USB PSY REGISTRATION *
  ************************/
@@ -2278,6 +2318,14 @@ static int smb2_probe(struct platform_device *pdev)
 			pr_err("Couldn't setup chg_config rc=%d\n", rc);
 		return rc;
 	}
+
+#if defined(CONFIG_TYPEC_AUDIO_ADAPTER_SWITCH)
+	rc = smb2_pre_parse_dt(chip);
+	if (rc < 0) {
+		pr_err("Couldn't pre-parse dt. rc=%d\n", rc);
+		return rc;
+	}
+#endif
 
 	rc = smb2_parse_dt(chip);
 	if (rc < 0) {

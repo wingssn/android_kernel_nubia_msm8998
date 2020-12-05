@@ -210,6 +210,7 @@
 			};
 			
 			system {
+				mnt_point = "/system_root";
 				compatible = "android,vendor";
 				dev = "/dev/block/platform/soc/1da4000.ufshc/by-name/system";
 				type = "ext4";
